@@ -5,12 +5,7 @@ let rec solve sum pos (tape:int[]) =
         sum
     else
         let offset = tape.[pos]
-        let change =
-            if offset > 2 then
-                -1
-            else
-                1
-        tape.[pos] <-  offset + change
+        tape.[pos] <-  offset + if offset > 2 then -1 else 1
         solve (sum + 1) (pos + offset) tape
 
 [<EntryPoint>]
