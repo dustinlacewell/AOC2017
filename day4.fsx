@@ -1,8 +1,4 @@
-﻿open System
-open System.IO
-open System.Collections.Generic
-
-#load "utils.fsx"
+﻿#load "utils.fsx"
 
 let isValid (phrase:string) =
     not (phrase
