@@ -2,7 +2,7 @@
 
 let isValid (phrase:string) =
     not (phrase
-    |> Utils.tokenize ' '
+    |> Utils.split ' '
     |> Seq.countBy id
     |> Seq.exists (fun (x, n) -> n > 1))
 
