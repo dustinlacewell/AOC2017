@@ -2,29 +2,18 @@
 open System.IO
 open System.Collections.Generic
 
-let tokenize (x:string) = List.ofSeq (x.Split(' '))
+#load "utils.fsx"
 
-let readLine (sr:StreamReader) = match sr.ReadLine() with
-    | null -> sr.Dispose(); None
-    | str -> Some(str, sr)
-
-let readLines (filename:string) =
-    new StreamReader(filename) |> Seq.unfold readLine
-
-let validate tokens =
-    tokens
+let isValid (phrase:string) =
+    not (phrase
+    |> Utils.tokenize ' '
     |> Seq.countBy id
-    |> Seq.toList
-    |> Seq.filter (fun (x, n) -> n > 1)
-    |> Seq.length
-    |> (fun x -> x = 0)
-
+    |> Seq.exists (fun (x, n) -> n > 1))
 
 [<EntryPoint>]
 let main argv =
-    readLines "day4.txt"
-    |> Seq.map (tokenize >> validate)
-    |> Seq.filter (fun x -> x)
+    Utils.readLines "day4.txt"
+    |> Seq.filter isValid
     |> Seq.length
     |> printfn "%A"
     0
