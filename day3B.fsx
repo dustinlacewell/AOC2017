@@ -20,9 +20,9 @@ type Walker() =
             _direction <- direction
     member this.Scan() =
         directions
-        |> List.map (fun d -> match map.TryGetValue (Add this.Position d) with
-                     | true, value -> value
-                     | _ -> 0)
+        |> List.map (fun offset -> match map.TryGetValue (Add this.Position offset) with
+                                   | true, value -> value
+                                   | _ -> 0)
         |> List.sum
 
 
@@ -31,7 +31,6 @@ let rec walk (walker:Walker, target) =
     walker.Move()
     let total = walker.Scan()
     map.Add(walker.Position, total)
-    printfn "Wrote %A at %A" total walker.Position
     if total > target then
         total
     else
